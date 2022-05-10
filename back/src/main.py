@@ -16,4 +16,10 @@ def filter_by_location(list_of_matches):
 
 
 def filter_by_skill(list_of_matches):
+
     return [match for match in list_of_matches if match.has_skill()]
+
+
+def filter_by_languages(list_of_matches):
+
+    return [match for match in list_of_matches if match.has_same_languages()]
