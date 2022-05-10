@@ -14,6 +14,12 @@ class Match:
         else:
             return False
 
+    def has_skill(self):
+        for skill in self.recruiter.skills:
+            if skill in self.coder.skills:
+                return True
+        return False
+
     # def calc_match(self):
     #     location_value = 0
     #     for location in self.coder.location:

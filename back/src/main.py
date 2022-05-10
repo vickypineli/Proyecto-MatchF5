@@ -13,3 +13,7 @@ def create_list_of_matches(coders, recruiters, number_of_meetings):
 
 def filter_by_location(list_of_matches):
     return [match for match in list_of_matches if match.is_same_location()]
+
+
+def filter_by_skill(list_of_matches):
+    return [match for match in list_of_matches if match.has_skill()]
