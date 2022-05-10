@@ -1,14 +1,9 @@
 class Match:
-    def __init__(self, coder, recruiter):
+    def __init__(self, coder, recruiter, meeting_time):
         self.coder = coder
         self.recruiter = recruiter
+        self.meeting_time = meeting_time
         # self.coincidence = self.calc_match()
-
-
-
-
-
-
 
     # def calc_match(self):
     #     location_value = 0
@@ -26,8 +21,8 @@ class Match:
     #     languages_coincidences = []
     #     if self.recruiter. languages == []:
     #         languages_value = 0.2
-    #     else: 
-        
+    #     else:
+
     #     for language in self.coder.languages:
 
     #         if language in self.recruiter.languages:
