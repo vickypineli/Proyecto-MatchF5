@@ -1,9 +1,18 @@
+from sqlalchemy import false, true
+
+
 class Match:
     def __init__(self, coder, recruiter, meeting_time):
         self.coder = coder
         self.recruiter = recruiter
         self.meeting_time = meeting_time
         # self.coincidence = self.calc_match()
+
+    def is_same_location(self):
+        if self.coder.location == self.recruiter.location:
+            return True
+        else:
+            return False
 
     # def calc_match(self):
     #     location_value = 0
