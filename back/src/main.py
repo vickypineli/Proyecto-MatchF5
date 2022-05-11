@@ -1,8 +1,10 @@
 from src.domain.match import Match
+from src.domain.coder import Coder
 
 
 def create_list_of_matches(coders, recruiters, number_of_meetings):
     matchs_list = []
+    coders.append(Coder("Joker"))
     for coder in coders:
         for recruiter in recruiters:
             for meeting in range(number_of_meetings):
