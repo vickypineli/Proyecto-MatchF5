@@ -1,5 +1,6 @@
 from src.domain.match import Match
 from src.domain.coder import Coder
+from itertools import combinations
 
 
 def create_list_of_matches(coders, recruiters, number_of_meetings):
@@ -11,6 +12,11 @@ def create_list_of_matches(coders, recruiters, number_of_meetings):
                 match = Match(coder, recruiter, meeting)
                 matchs_list.append(match)
     return matchs_list
+
+def create_list_of_combinations(list_of_matches, slots):
+    list_of_combinations = combinations (list_of_matches, slots)
+    return list_of_combinations
+
 
 
 def filter_by_location(list_of_matches):
