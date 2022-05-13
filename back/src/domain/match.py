@@ -5,6 +5,9 @@ class Match:
         self.meeting_time = meeting_time
         # self.coincidence = self.calc_match()
 
+    def to_str(self):
+        return f"| {self.coder.name}, {self.recruiter.name}, slot:{self.meeting_time}|"
+
     def is_same_location(self):
         for location in self.recruiter.location:
             if location in self.coder.location:
