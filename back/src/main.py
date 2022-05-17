@@ -23,6 +23,10 @@ def filter_invalid_combinations(list_of_combinations):
     return filter(is_valid_combination, list_of_combinations)
 
 
+def filter_repeated_meetings(list_of_combinations):
+    return filter(has_coders_properly_distributed, list_of_combinations)
+
+
 def is_valid_combination(combination):
 
     time_slot_list = []
@@ -31,6 +35,23 @@ def is_valid_combination(combination):
         if time_slot in time_slot_list:
             return False
         time_slot_list.append(time_slot)
+    return True
+
+
+def has_coders_properly_distributed(combination):
+    meeting_list = []
+    coder_times = []
+    for match in combination:
+        if match.coder.name == "joker":
+            continue
+        meeting = f"{match.recruiter.name}{match.coder.name}"
+        if meeting in meeting_list:
+            return False
+        coder_time_slot = f"{match.coder.name}{match.meeting_time}"
+        meeting_list.append(meeting)
+        if coder_time_slot in coder_times:
+            return False
+        coder_times.append(coder_time_slot)
     return True
 
 
