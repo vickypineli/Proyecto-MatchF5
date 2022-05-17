@@ -19,6 +19,21 @@ def create_list_of_combinations(list_of_matches, slots):
     return list_of_combinations
 
 
+def filter_invalid_combinations(list_of_combinations):
+    return filter(is_valid_combination, list_of_combinations)
+
+
+def is_valid_combination(combination):
+
+    time_slot_list = []
+    for match in combination:
+        time_slot = f"{match.recruiter.name}{match.meeting_time}"
+        if time_slot in time_slot_list:
+            return False
+        time_slot_list.append(time_slot)
+    return True
+
+
 def filter_by_location(list_of_matches):
     return [match for match in list_of_matches if match.is_same_location()]
 
