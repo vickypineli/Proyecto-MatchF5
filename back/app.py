@@ -10,13 +10,9 @@ import time
 
 ainara = Coder("ainara")
 jeff = Coder("jeff")
-joseph = Coder("joseph")
-ainhoa = Coder("ainhoa")
-iker = Coder("iker")
 
 perla = Recruiter("perla")
 laura = Recruiter("laura")
-ana = Recruiter("ana")
 
 
 coder_list = [ainara, jeff]
@@ -45,8 +41,6 @@ pre_filtered_solutions = filter_invalid_combinations(solutions_list)
 filtered_solutions = filter_repeated_meetings(pre_filtered_solutions)
 
 print("--- %s seconds ---" % (time.time() - start_time))
-
-# print(sum(1 for i in filtered_solutions))
 
 solution_number = 0
 for solution in filtered_solutions:
