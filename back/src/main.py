@@ -22,11 +22,6 @@ def create_list_of_combinations(list_of_matches, slots):
 def filter_invalid_combinations(list_of_combinations):
     return filter(is_valid_combination, list_of_combinations)
 
-
-def filter_repeated_meetings(list_of_combinations):
-    return filter(has_coders_properly_distributed, list_of_combinations)
-
-
 def is_valid_combination(combination):
 
     time_slot_list = []
@@ -37,6 +32,8 @@ def is_valid_combination(combination):
         time_slot_list.append(time_slot)
     return True
 
+def filter_repeated_meetings(list_of_combinations):
+    return filter(has_coders_properly_distributed, list_of_combinations)
 
 def has_coders_properly_distributed(combination):
     meeting_list = []
