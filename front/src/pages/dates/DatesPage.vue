@@ -1,20 +1,22 @@
 <template>  
-  <div class="dates">
-    <h1> DATOS</h1>
-  </div>
-  <section id="container">
-    <div>
-        <label for="">Archivo Recruiters</label>
-        <input type="number" v-model="recruiters"/>
+<section class="box">
+    <div class="dates">
+      <h1> INSERTAR DATOS </h1>
     </div>
-    <div>
-    <label for="">Archivo Coders</label>
-    <input type="number" v-model="coders"/>
-    </div>
-    <div>
-    <label for="">Nº de reuniones de la jornada</label>
-    <input type="number" v-model="huecos"/>
-    </div>
+    <article id="container">
+          <div class="selectfile">
+            <label>ARCHIVO CODERS:
+              <input type="file" id="file" ref="file" v-on:change="onChangeFileUpload()"/>
+            </label>
+          </div> 
+
+          <div class="selectfile">  
+            <label>ARCHIVO RECRUITERS:
+              <input type="file" id="file" ref="file" v-on:change="onChangeFileUpload()"/>
+            </label>
+          </div>
+          <button v-on:click="submitForm()">UPLOAD</button>
+    </article>
 </section>
 
 </template>
@@ -33,17 +35,51 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@1,300&family=Poppins&display=swap');
+.box{
+  margin: auto;
+  width: 80vw;
+  background: rgb(240, 237, 237);
+  padding: 1.3em;
+
+}
 #container {
-  width: 30vh;
+  width: 70vw;
   margin: auto;
   display: flex;
   flex-direction: column;
-  padding: 50px;
-  background: rgb(233, 225, 225);
+
 }
-#result{
-  color: crimson;
+.selectfile{
+  display: flex;
+  flex-direction: column;
 }
+input {
+  width: 60vw;
+  margin: 10px;
+  padding: 20px;
+  background: rgb(215, 211, 211);
+  color: #2c3e50;
+}
+label{
+  margin: 10px;
+  font-size: 1.5em;
+  color: rgb(215, 66, 12);
+  font-family: 'Bebas Neue', cursive;
+  text-align: left;
+
+}
+button{
+  width: 30vw;
+  background: orangered;
+  border-radius: 15px;
+  border-color: rgb(237, 142, 74);
+  margin: auto;
+  color: white;
+  font-size: 1.4em;
+  font-family: 'poppins';
+}
+
 </style>
