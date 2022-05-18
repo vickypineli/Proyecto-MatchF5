@@ -4,11 +4,11 @@
   </div>
   <section id="container">
     <div>
-        <label for="">Nº de Recruiters</label>
+        <label for="">Archivo Recruiters</label>
         <input type="number" v-model="recruiters"/>
     </div>
     <div>
-    <label for="">Nº de Coders</label>
+    <label for="">Archivo Coders</label>
     <input type="number" v-model="coders"/>
     </div>
     <div>
