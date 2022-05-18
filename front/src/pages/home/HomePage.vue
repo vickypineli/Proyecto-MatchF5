@@ -1,7 +1,8 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="@/assets/img/logo.png" />
-    <h1>Wellcome</h1>
+    <img alt="Vue logo" src="@/assets/img/F5logo.png" />
+    <h2>Digital Talent Day </h2>
+    <p>Match F5</p>
   </div>
 </template>
 
@@ -29,7 +30,18 @@ export default {
 </script>
 
 <style scoped>
+
+.home{
+  width: 60vw;
+  margin: auto;
+  padding: 50px;
+}
+img{
+  width: 10vw;
+}
+
 h1 {
   font-style: italic;
 }
+
 </style>
