@@ -86,7 +86,7 @@ def test_main_should_filter_invalid_combiantions():
     assert number_of_combinations == 16
 
 
-def test_main_should_filter_invalid_combiantions():
+def test_main_should_filter_repeat_meetings():
     ainara = Coder("ainara")
     perla = Recruiter("perla")
     laura = Recruiter("laura")
