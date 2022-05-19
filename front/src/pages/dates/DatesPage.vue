@@ -15,6 +15,11 @@
               <input type="file" id="file" ref="file" v-on:change="onChangeFileUpload()"/>
             </label>
           </div>
+          <!-- <div class="selectfile">  
+            <label>Nº REUNIONES:
+              <input type="number" min="0" max="20"/>
+            </label>
+          </div> -->
           <button v-on:click="submitForm()">UPLOAD</button>
     </article>
 </section>
@@ -42,7 +47,7 @@ export default {
   margin: auto;
   width: 80vw;
   background: rgb(240, 237, 237);
-  padding: 1.3em;
+  padding: 1.1em;
 
 }
 #container {
@@ -78,7 +83,7 @@ button{
   border-color: rgb(237, 142, 74);
   margin: auto;
   color: white;
-  font-size: 1.4em;
+  font-size: 1.2em;
   font-family: 'poppins';
 }
 
