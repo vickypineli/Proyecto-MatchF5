@@ -6,33 +6,12 @@
     <article id="container">
       <div class="selectfile">
         <label
-          >ARCHIVO CODERS:
-          <input
-            type="file"
-            id="file"
-            ref="file"
-            @change="onChangeFileCoders"
-          />
+          >SUBIR ARCHIVO:
+          <input type="file" id="file" ref="file" @change="onChangeFile" />
           <!--<input @change="uploadFile" type="file" id="input_dom_element">-->
         </label>
       </div>
 
-      <div class="selectfile">
-        <label
-          >ARCHIVO RECRUITERS:
-          <input
-            type="file"
-            id="file"
-            ref="file"
-            @change="onChangeFileRecruiters"
-          />
-        </label>
-      </div>
-      <!-- <div class="selectfile">  
-            <label>Nº REUNIONES:
-              <input type="number" min="0" max="20"/>
-            </label>
-          </div> -->
       <button v-on:click="submitForm()">UPLOAD</button>
     </article>
   </section>
@@ -58,23 +37,21 @@ export default {
     };
   },
   methods: {
-    async onChangeFileRecruiters(event) {
+    async onChangeFile(event) {
       const file = event.target.files[0];
       const data = await file.arrayBuffer();
       const workbook = XLSX.read(data);
-      const worksheet = workbook.Sheets["RECRUITERS"]; //Se especifica el nombre de la hoja
-      //var csv = XLSX.utils.sheet_to_csv(worksheet)   //Si queremos CSV
-      var json = XLSX.utils.sheet_to_json(worksheet); //Si queremos JSON
-      console.log("esto es!:", json);
-    },
-    async onChangeFileCoders(event) {
-      const file = event.target.files[0];
-      const data = await file.arrayBuffer();
-      const workbook = XLSX.read(data);
-      const worksheet = workbook.Sheets["CODERS"]; //Se especifica el nombre de la hoja
-      //var csv = XLSX.utils.sheet_to_csv(worksheet)   //Si queremos CSV
-      var json = XLSX.utils.sheet_to_json(worksheet); //Si queremos JSON
-      console.log("esto es!:", json);
+      const worksheetCoders = workbook.Sheets["CODERS"];
+      const worksheetRecruiters = workbook.Sheets["RECRUITERS"]; //Se especifica el nombre de la
+      var csvRecruiters = XLSX.utils.sheet_to_csv(worksheetRecruiters); //Si qu hoja
+      var csvCoders = XLSX.utils.sheet_to_csv(worksheetCoders);
+      console.log("Coders", csvCoders);
+      console.log("Recruiters", csvRecruiters);
+
+      var jsonCoders = XLSX.utils.sheet_to_json(worksheetCoders);
+      var jsonRecruiters = XLSX.utils.sheet_to_json(worksheetRecruiters); //Si queremos JSON
+      console.log("Coders", jsonCoders);
+      console.log("Recruiters", jsonRecruiters);
     },
   },
 };
