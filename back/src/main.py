@@ -85,15 +85,13 @@ def select_locations(item_dict):
             locations.append(key[2:])      
     return locations
 
-# ORGANIZACION DE COMMITS
+def convert_to_coder(coder_dict):
 
-# def convert_to_coder(coder_dict):
+    skills = select_skills(coder_dict)
+    locations = select_locations(coder_dict)
+    coder = Coder(name = coder_dict["NOMBRE"], locations= locations, skills = skills, prom = coder_dict["PROMOCION"] )
 
-#     skills = select_skills(coder_dict)
-#     locations = select_locations(coder_dict)
-#     coder = Coder(name = coder_dict["NOMBRE"], locations= locations, skills = skills, prom = coder_dict["PROMOCION"] )
+    return coder
 
-#     return coder
-
-# def create_list_of_coders(coder_list):
-#     return [convert_to_coder(coder) for coder in coder_list]
+def create_list_of_coders(coder_list):
+    return [convert_to_coder(coder) for coder in coder_list]
