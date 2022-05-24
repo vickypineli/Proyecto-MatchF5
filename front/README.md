@@ -35,7 +35,7 @@ See [Configuration Reference](https://cli.vuejs.org/config/)
 El json es un diccionario con dos claves (coders y recruiters) las cuales
 contienen una lista de diccionarios con los coder y recruiters respectivamente.
 
-{"coders": [{coder},{coder},{coder}], "recruiters": [{recruiter},{recruiter},{recruiter}]}
+{"coders": [{coder},{coder},{coder}, ...], "recruiters": [{recruiter},{recruiter},{recruiter}, ...]}
 
 cada diccionario de coder tendrá el siguiente aspecto:
 
