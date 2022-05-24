@@ -98,12 +98,12 @@ def convert_to_coder(coder_dict):
 def create_list_of_coders(coder_list):
     return [convert_to_coder(coder) for coder in coder_list]
 
-# def select_schedule_from_recruiter(recruiter_dict):
-#     schedule_dict = {}
-#     for key, value in recruiter_dict():
-#         if re.search("^[0-2][0-3]:[0-5][0-9]", key) is not None:
-#             schedule_dict[key]=value
-#     return schedule_dict            
+def select_schedule_from_recruiter(recruiter_dict):
+    schedule_dict = {}
+    for key, value in recruiter_dict.items():
+        if re.search("^[0-2][0-3]:[0-5][0-9]", key) is not None:
+            schedule_dict[key]=value
+    return schedule_dict            
 
 # def convert_to_recruiter(recruiter_dict):
 #     skills = select_skills(recruiter_dict)
