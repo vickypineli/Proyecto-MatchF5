@@ -51,6 +51,11 @@ def has_coders_properly_distributed(combination):
         coder_times.append(coder_time_slot)
     return True
 
+def final_result(list_of_matches, slots):
+    list_of_combinations = create_list_of_combinations(list_of_matches, slots)
+    valid_combinations = filter_invalid_combinations(list_of_combinations)
+    final_meetings = filter_repeated_meetings(valid_combinations)
+    return final_meetings
 
 def filter_by_location(list_of_matches):
     return [match for match in list_of_matches if match.is_same_location()]
@@ -64,3 +69,31 @@ def filter_by_skill(list_of_matches):
 def filter_by_languages(list_of_matches):
 
     return [match for match in list_of_matches if match.has_same_languages()]
+
+
+def select_skills(item_dict):
+    skills = []
+    for key, value in item_dict.items():
+        if key.startswith("S-") and value == "x":
+            skills.append(key[2:])      
+    return skills
+
+def select_locations(item_dict):
+    locations = []
+    for key, value in item_dict.items():
+        if key.startswith("L-") and value == "x":
+            locations.append(key[2:])      
+    return locations
+
+# ORGANIZACION DE COMMITS
+
+# def convert_to_coder(coder_dict):
+
+#     skills = select_skills(coder_dict)
+#     locations = select_locations(coder_dict)
+#     coder = Coder(name = coder_dict["NOMBRE"], locations= locations, skills = skills, prom = coder_dict["PROMOCION"] )
+
+#     return coder
+
+# def create_list_of_coders(coder_list):
+#     return [convert_to_coder(coder) for coder in coder_list]
