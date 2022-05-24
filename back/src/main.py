@@ -1,6 +1,8 @@
+from src.domain.recruiter import Recruiter
 from src.domain.match import Match
 from src.domain.coder import Coder
 from itertools import combinations
+import re
 
 
 def create_list_of_matches(coders, recruiters, number_of_meetings):
@@ -89,9 +91,23 @@ def convert_to_coder(coder_dict):
 
     skills = select_skills(coder_dict)
     locations = select_locations(coder_dict)
-    coder = Coder(name = coder_dict["NOMBRE"], locations= locations, skills = skills, prom = coder_dict["PROMOCION"] )
+    coder = Coder(name = coder_dict["NOMBRE"]+ " " + coder_dict["APELLIDOS"], locations= locations, skills = skills, prom = coder_dict["PROMOCION"] )
 
     return coder
 
 def create_list_of_coders(coder_list):
     return [convert_to_coder(coder) for coder in coder_list]
+
+# def select_schedule_from_recruiter(recruiter_dict):
+#     schedule_dict = {}
+#     for key, value in recruiter_dict():
+#         if re.search("^[0-2][0-3]:[0-5][0-9]", key) is not None:
+#             schedule_dict[key]=value
+#     return schedule_dict            
+
+# def convert_to_recruiter(recruiter_dict):
+#     skills = select_skills(recruiter_dict)
+#     locations = select_locations(recruiter_dict)
+#     recruiter = Recruiter(name_of_the_recruiter = recruiter_dict["NOMBRE DEL RECRUITER"], company  = recruiter_dict["EMPRESA"], email = ["EMAIL"], charge = recruiter_dict["CARGO"], locations = locations, skills = skills, languages = [], schedule = {} )
+
+#     return recruiter
