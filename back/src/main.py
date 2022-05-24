@@ -112,3 +112,9 @@ def convert_to_recruiter(recruiter_dict):
 
 def create_list_of_recruiters(recruiters_list):
     return [convert_to_recruiter(recruiter) for recruiter in recruiters_list]
+
+def count_number_of_slots(recruiter_obj_list):
+    recruiter = recruiter_obj_list[0]
+    slots = len(recruiter.schedule)
+    return slots
+    
