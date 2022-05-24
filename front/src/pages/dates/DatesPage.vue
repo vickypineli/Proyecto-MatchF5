@@ -12,9 +12,10 @@
         </label>
       </div>
 
-      <button v-on:click="submitForm()">UPLOAD</button>
+      <button @click="sendData">UPLOAD</button>
     </article>
   </section>
+  <p v-show="checkSpreadsheetName===true">Verificar el nombre de las hojas sea en mayúsculas</p>
 </template>
 
 <script>
@@ -34,27 +35,50 @@ export default {
       coders: 0,
       recruiters: 0,
       huecos: 0,
+      jsonCoders:'',
+      jsonRecruiters:'',
+      checkSpreadsheetName:''
     };
   },
   methods: {
     async onChangeFile(event) {
-      const file = event.target.files[0];
-      const data = await file.arrayBuffer();
-      const workbook = XLSX.read(data);
-      const worksheetCoders = workbook.Sheets["CODERS"];
-      const worksheetRecruiters = workbook.Sheets["RECRUITERS"]; //Se especifica el nombre de la
-      var csvRecruiters = XLSX.utils.sheet_to_csv(worksheetRecruiters); //Si qu hoja
-      var csvCoders = XLSX.utils.sheet_to_csv(worksheetCoders);
-      console.log("Coders", csvCoders);
-      console.log("Recruiters", csvRecruiters);
+      const file = event.target.files[0]
+      const data = await file.arrayBuffer()
+      const workbook = XLSX.read(data)
+      const worksheetCoders = workbook.Sheets["CODERS"]
+      const worksheetRecruiters = workbook.Sheets["RECRUITERS"]
+      // var csvRecruiters = XLSX.utils.sheet_to_csv(worksheetRecruiters)
+      // var csvCoders = XLSX.utils.sheet_to_csv(worksheetCoders)
+      // console.log("Coders", csvCoders)
+      // console.log("Recruiters", csvRecruiters)
 
-      var jsonCoders = XLSX.utils.sheet_to_json(worksheetCoders);
-      var jsonRecruiters = XLSX.utils.sheet_to_json(worksheetRecruiters); //Si queremos JSON
-      console.log("Coders", jsonCoders);
-      console.log("Recruiters", jsonRecruiters);
+      this.jsonCoders = XLSX.utils.sheet_to_json(worksheetCoders)
+      this.jsonRecruiters = XLSX.utils.sheet_to_json(worksheetRecruiters)
+      console.log("Coders", this.jsonCoders)
+      console.log("Recruiters", this.jsonRecruiters)
     },
-  },
-};
+
+    checkDataIfIsComplete(){
+      if (this.jsonRecruiters.length === 0 || this.jsonCoders.length === 0){
+          this.checkSpreadsheetName=true
+          return false
+        }
+      else {return true}
+      },
+      
+    sendData(){
+      if (this.checkDataIfIsComplete()===true){
+          const settings={
+            method:"POST",
+            body:{CODERS:this.jsonCoders,RECRUITERS:this.jsonRecruiters},
+            headers:{"Content-Type":"application/json"}
+          }
+          // let response = await fetch("http://localhost:5000/api/match", settings)
+          console.log("Response", settings)
+      }
+    }
+  }
+}
 </script>
 
 <style scoped>
