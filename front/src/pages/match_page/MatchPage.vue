@@ -1,14 +1,13 @@
 <template>
   <section class="box">
-    <div class="dates">
+    <div class="data">
       <h1>INSERTAR DATOS</h1>
     </div>
     <article id="container">
       <div class="selectfile">
         <label
           >SUBIR ARCHIVO:
-          <input type="file" id="file" ref="file" @change="onChangeFile" />
-          <!--<input @change="uploadFile" type="file" id="input_dom_element">-->
+          <input type="file" @change="onChangeFile" />
         </label>
       </div>
 
@@ -19,16 +18,16 @@
 </template>
 
 <script>
-import * as fs from "fs";
-var XLSX = require("xlsx");
-XLSX.set_fs(fs);
+import * as fs from "fs"
+var XLSX = require("xlsx")
+XLSX.set_fs(fs)
 
 /* load 'stream' for stream support */
-import { Readable } from "stream";
-XLSX.stream.set_readable(Readable);
+import { Readable } from "stream"
+XLSX.stream.set_readable(Readable)
 
 export default {
-  name: " Datos",
+  name: "MatchPage",
   data() {
     return {
       calculo: 0,
@@ -38,7 +37,7 @@ export default {
       jsonCoders:'',
       jsonRecruiters:'',
       checkSpreadsheetName:''
-    };
+    }
   },
   methods: {
     async onChangeFile(event) {
@@ -47,11 +46,7 @@ export default {
       const workbook = XLSX.read(data)
       const worksheetCoders = workbook.Sheets["CODERS"]
       const worksheetRecruiters = workbook.Sheets["RECRUITERS"]
-      // var csvRecruiters = XLSX.utils.sheet_to_csv(worksheetRecruiters)
-      // var csvCoders = XLSX.utils.sheet_to_csv(worksheetCoders)
-      // console.log("Coders", csvCoders)
-      // console.log("Recruiters", csvRecruiters)
-
+  
       this.jsonCoders = XLSX.utils.sheet_to_json(worksheetCoders)
       this.jsonRecruiters = XLSX.utils.sheet_to_json(worksheetRecruiters)
       console.log("Coders", this.jsonCoders)

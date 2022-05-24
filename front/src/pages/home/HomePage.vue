@@ -5,7 +5,7 @@
       <h2>Digital Talent Day </h2>
       <p>Match F5</p>
     </div>
-    <router-link to="/dates"><button>ENTER</button></router-link>
+    <router-link to="/match"><button>ENTER</button></router-link>
 </section>
 </template>
 
@@ -18,15 +18,8 @@ export default {
       info: {}
     }
   },
-  mounted() {
-    this.loadData()
-  },
-  methods: {
-    async loadData() {
-      const response = await fetch('http://localhost:5000/api/info')
-      this.info = await response.json()
-    }
-  }
+  mounted() {},
+  methods: {}
 }
 </script>
 
