@@ -105,9 +105,10 @@ def select_schedule_from_recruiter(recruiter_dict):
             schedule_dict[key]=value
     return schedule_dict            
 
-# def convert_to_recruiter(recruiter_dict):
-#     skills = select_skills(recruiter_dict)
-#     locations = select_locations(recruiter_dict)
-#     recruiter = Recruiter(name_of_the_recruiter = recruiter_dict["NOMBRE DEL RECRUITER"], company  = recruiter_dict["EMPRESA"], email = ["EMAIL"], charge = recruiter_dict["CARGO"], locations = locations, skills = skills, languages = [], schedule = {} )
+def convert_to_recruiter(recruiter_dict):
+    skills = select_skills(recruiter_dict)
+    locations = select_locations(recruiter_dict)
+    schedules = select_schedule_from_recruiter(recruiter_dict)
+    recruiter = Recruiter(name = recruiter_dict["NOMBRE DEL RECRUITER"], company  = recruiter_dict["EMPRESA"], email = ["EMAIL"], charge = recruiter_dict["CARGO"], locations = locations, skills = skills, languages = [], schedule = schedules )
 
-#     return recruiter
+    return recruiter
