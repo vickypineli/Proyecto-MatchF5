@@ -30,8 +30,8 @@ from src.main import (
 
 def test_main_should_create_a_list_of_matches():
     ainara = Coder("ainara")
-    perla = Recruiter("perla")
-    laura = Recruiter("laura")
+    perla = Recruiter("perla", "Ibermatica", "perla@gmail.com", "Directora")
+    laura = Recruiter("laura", "Kerkaru", "laura@gmail.com", "Directora")
     coder_list = [ainara]
     recruiter_list = [perla, laura]
     number_of_meetings = 2
@@ -44,8 +44,8 @@ def test_main_should_create_a_list_of_matches():
 
 def test_main_should_create_a_list_of_posible_combinations():
     ainara = Coder("ainara")
-    perla = Recruiter("perla")
-    laura = Recruiter("laura")
+    perla = Recruiter("perla", "Ibermatica", "perla@gmail.com", "Directora")
+    laura = Recruiter("laura", "Kerkaru", "laura@gmail.com", "Directora")
     coder_list = [ainara]
     recruiter_list = [perla, laura]
     number_of_meetings = 2
