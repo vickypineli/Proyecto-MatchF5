@@ -1,4 +1,4 @@
-# Aplicación semilla (front)
+# Aplicación MatchF5(front)
 
 ## Configuración del proyecto
 

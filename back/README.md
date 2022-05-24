@@ -1,4 +1,4 @@
-# Aplicación semilla (backend)
+# Aplicación matchF5 (backend)
 
 ## Puesta en marcha
 
@@ -6,16 +6,14 @@
 
 1. Instalar los paquetes necesarios
 
-    `python -m pip install --user -r requirements.txt`
+   `python -m pip install --user -r requirements.txt`
 
 2. Ejecutar los tests
 
-    `python -m pytest`
+   `python -m pytest`
 
-3. Generar los datos iniciales
+3. Ejecutar la aplicación
 
-    `python scripts/initial_data.py`
+   `python app.py`
 
-4. Ejecutar la aplicación
-
-    `python app.py`
+   En este momento la ejecución de la aplicación devuelve por consola un ejemplo con posibles horarios.
