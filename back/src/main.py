@@ -147,3 +147,14 @@ def count_number_of_slots(recruiter_obj_list):
     recruiter = recruiter_obj_list[0]
     slots = len(recruiter.schedule)
     return slots
+
+
+def select_solution(list_of_solutions):
+    for solution in list_of_solutions:
+        jokers = 0
+        for match in solution:
+            if match.coder.name == "joker":
+                jokers += 1
+        if jokers > 0:
+            continue
+        return solution
