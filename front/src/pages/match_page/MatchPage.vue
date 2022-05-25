@@ -36,9 +36,49 @@ export default {
       huecos: 0,
       jsonCoders:'',
       jsonRecruiters:'',
-      checkSpreadsheetName:''
+      checkSpreadsheetName:'',
+      responsePOST: "",
+      match: [{
+              EMPRESA:"Devoteam Drago",
+              "NOMBRE Y APELLIDOS": "IGNACIO MERINO ALVAREZ", 
+              EMAIL: " ", 
+              CARGO: "DIRECTOR ZONA NORTE", 
+              LINKEDIN: "https://www.linkedin.com/in/ignacio-merino/", 
+              BCN: "x", 
+              AST: "", 
+              BIO: "x", 
+              PHP:"x", 
+              JAVA:"x", 
+              PYTHON:"x", 
+              "10:10": "BIO Perla" , 
+              "10:20": "BIO David Ordiales", 
+              "10:30": "BIO Ainara"
+            },
+            {
+              EMPRESA:"Ibermatica",
+              "NOMBRE Y APELLIDOS": "BArtolo perez", 
+              EMAIL: " bartolo@hotmail.com", 
+              CARGO: "RRHH", 
+              LINKEDIN: "https://www.linkedin.com/in/bartolo/", 
+              REMOTO: "x",
+              BCN: "", 
+              AST: "x", 
+              BIO: "", 
+              PHP:"x", 
+              JAVA:"x", 
+              PYTHON:"x", 
+              "10:10": "BIO David Ordiales" , 
+              "10:20": "", 
+              "10:30": "BIO Ainara"
+            }]
     }
   },
+  watch: {
+    responsePOST(){
+      this.retrieveData()
+    }
+  },
+
   methods: {
     async onChangeFile(event) {
       const file = event.target.files[0]
@@ -59,7 +99,7 @@ export default {
           return false
         }
       else {return true}
-      },
+    },
       
     sendData(){
       if (this.checkDataIfIsComplete()===true){
@@ -68,9 +108,21 @@ export default {
             body:{CODERS:this.jsonCoders,RECRUITERS:this.jsonRecruiters},
             headers:{"Content-Type":"application/json"}
           }
-          // let response = await fetch("http://localhost:5000/api/match", settings)
+          // let response = await fetch("http://localhost:5000/api/match", settings) 
+          if (response.status=== 200 ) {
+              this.responsePOST =  response
+          }
+          
           console.log("Response", settings)
       }
+      this.retrieveData(this.match)
+    },
+
+    async retrieveData(){
+        const workbook = XLSX.utils.book_new();
+        const worksheet = XLSX.utils.json_to_sheet(this.match)
+        XLSX.utils.book_append_sheet(workbook, worksheet, "Propuesta Match")
+        XLSX.writeFile(workbook, "Match.xlsx") //OK
     }
   }
 }
@@ -95,6 +147,7 @@ export default {
   display: flex;
   flex-direction: column;
 }
+
 input {
   width: 60vw;
   margin: 10px;
@@ -102,6 +155,7 @@ input {
   background: rgb(215, 211, 211);
   color: #2c3e50;
 }
+
 label {
   margin: 10px;
   font-size: 1.5em;
@@ -109,6 +163,7 @@ label {
   font-family: "Bebas Neue", cursive;
   text-align: left;
 }
+
 button {
   width: 30vw;
   background: orangered;
@@ -119,4 +174,5 @@ button {
   font-size: 1.2em;
   font-family: "poppins";
 }
+
 </style>
