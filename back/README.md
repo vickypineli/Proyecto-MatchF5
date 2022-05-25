@@ -48,6 +48,7 @@ además cada diccionario de recruiter tendra el siguiente aspecto:
 "EMPRESA": el nombre de la empresa a la que el recruiter representa,
 "NOMBRE DEL RECRUITER": el nombre del recruiter que asiste a la reunión,
 "EMAIL": el e-mail de contacto,
+"LINKEDIN": el linkedin del recruiter,
 "CARGO": el cargo del recruiter dentro de la empresa que representa,
 "L-BILBAO": "x",
 "L-BARCELONA: "",

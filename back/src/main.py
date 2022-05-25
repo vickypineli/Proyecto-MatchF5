@@ -24,6 +24,7 @@ def create_list_of_combinations(list_of_matches, slots):
 def filter_invalid_combinations(list_of_combinations):
     return filter(is_valid_combination, list_of_combinations)
 
+
 def is_valid_combination(combination):
 
     time_slot_list = []
@@ -34,8 +35,10 @@ def is_valid_combination(combination):
         time_slot_list.append(time_slot)
     return True
 
+
 def filter_repeated_meetings(list_of_combinations):
     return filter(has_coders_properly_distributed, list_of_combinations)
+
 
 def has_coders_properly_distributed(combination):
     meeting_list = []
@@ -53,68 +56,94 @@ def has_coders_properly_distributed(combination):
         coder_times.append(coder_time_slot)
     return True
 
+
 def final_result(list_of_matches, slots):
     list_of_combinations = create_list_of_combinations(list_of_matches, slots)
     valid_combinations = filter_invalid_combinations(list_of_combinations)
     final_meetings = filter_repeated_meetings(valid_combinations)
     return final_meetings
 
+
 def filter_by_location(list_of_matches):
     return [match for match in list_of_matches if match.is_same_location()]
+
 
 def filter_by_skill(list_of_matches):
 
     return [match for match in list_of_matches if match.has_skill()]
 
+
 def filter_by_languages(list_of_matches):
 
     return [match for match in list_of_matches if match.has_same_languages()]
+
 
 def select_skills(item_dict):
     skills = []
     for key, value in item_dict.items():
         if key.startswith("S-") and value == "x":
-            skills.append(key[2:])      
+            skills.append(key[2:])
     return skills
+
 
 def select_locations(item_dict):
     locations = []
     for key, value in item_dict.items():
         if key.startswith("L-") and value == "x":
-            locations.append(key[2:])      
+            locations.append(key[2:])
     return locations
+
 
 def convert_to_coder(coder_dict):
 
     skills = select_skills(coder_dict)
     locations = select_locations(coder_dict)
-    coder = Coder(name = coder_dict["NOMBRE"]+ " " + coder_dict["APELLIDOS"], locations= locations, skills = skills, prom = coder_dict["PROMOCION"] )
+    coder = Coder(
+        name=coder_dict["NOMBRE"] + " " + coder_dict["APELLIDOS"],
+        locations=locations,
+        skills=skills,
+        prom=coder_dict["PROMOCION"],
+    )
 
     return coder
 
+
 def create_list_of_coders(coder_list):
     return [convert_to_coder(coder) for coder in coder_list]
+
 
 def select_schedule_from_recruiter(recruiter_dict):
     schedule_dict = {}
     for key, value in recruiter_dict.items():
         if re.search("^[0-2][0-3]:[0-5][0-9]", key) is not None:
-            schedule_dict[key]=value
-    return schedule_dict            
+            schedule_dict[key] = value
+    return schedule_dict
+
 
 def convert_to_recruiter(recruiter_dict):
     skills = select_skills(recruiter_dict)
     locations = select_locations(recruiter_dict)
     schedules = select_schedule_from_recruiter(recruiter_dict)
-    recruiter = Recruiter(name = recruiter_dict["NOMBRE DEL RECRUITER"], company  = recruiter_dict["EMPRESA"], email = ["EMAIL"], charge = recruiter_dict["CARGO"], locations = locations, skills = skills, languages = [], schedule = schedules )
+    recruiter = Recruiter(
+        name=recruiter_dict["NOMBRE DEL RECRUITER"],
+        company=recruiter_dict["EMPRESA"],
+        email=recruiter_dict["EMAIL"],
+        linkedin=recruiter_dict["LINKEDIN"],
+        charge=recruiter_dict["CARGO"],
+        locations=locations,
+        skills=skills,
+        languages=[],
+        schedule=schedules,
+    )
 
     return recruiter
 
+
 def create_list_of_recruiters(recruiters_list):
     return [convert_to_recruiter(recruiter) for recruiter in recruiters_list]
+
 
 def count_number_of_slots(recruiter_obj_list):
     recruiter = recruiter_obj_list[0]
     slots = len(recruiter.schedule)
     return slots
-    
