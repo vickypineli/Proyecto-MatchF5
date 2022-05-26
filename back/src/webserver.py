@@ -1,7 +1,17 @@
 from lib2to3.pytree import convert
-from flask import Flask, request
+from flask import Flask, request, jsonify
 from flask_cors import CORS
-from main import final_result
+from src.main import (
+    create_list_of_recruiters,
+    create_list_of_coders,
+    count_number_of_slots,
+    create_list_of_matches,
+    final_result,
+    select_solution,
+    get_all_locations,
+    get_all_skills,
+    solution_to_dict,
+)
 
 from src.lib.utils import object_to_json
 
@@ -18,21 +28,23 @@ def create_app(repositories):
     def info_get():
         info = repositories["info"].get_info()
         return object_to_json(info)
-    
-    @app.route("/api/prematch", methods=["POST"] )
+
+    @app.route("/api/prematch", methods=["POST"])
     def post_coders():
         body = request.json
-        coders_list = body["coders"]
-        recruiters_list = body["recruiters"]
-        coders = convert_to_coder(coders_list)
-        recruiters = convert_to_recruiters(recruiters_list)
-        number_of_meetings = calculate_number_of_meetings(recruiters[0])
+        coders_list = body["CODERS"]
+        recruiters_list = body["RECRUITERS"]
+        coders = create_list_of_coders(coders_list)
+        recruiters = create_list_of_recruiters(recruiters_list)
+        number_of_meetings = count_number_of_slots(recruiters)
+        locations = get_all_locations(recruiters_list[0])
+        skills = get_all_skills(recruiters_list[0])
         matches = create_list_of_matches(coders, recruiters, number_of_meetings)
         slots = number_of_meetings * len(recruiters)
-        list_result = final_result(matches, slots )
-        
-        
-        return list_result
-    
+        solutions = final_result(matches, slots)
+        selected_solution = select_solution(solutions)
+        dict_of_solution = solution_to_dict(selected_solution, locations, skills)
+
+        return jsonify(dict_of_solution)
 
     return app

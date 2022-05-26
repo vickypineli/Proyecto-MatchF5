@@ -158,3 +158,58 @@ def select_solution(list_of_solutions):
         if jokers > 0:
             continue
         return solution
+
+
+def solution_to_dict(solution, locations, skills):
+    recruiters = []
+    list_of_dicts = []
+    for match in solution:
+        recruiter = match.recruiter
+        coder = match.coder
+        schedule = recruiter.schedule
+        schedule_hours = list(schedule.keys())
+        hour = schedule_hours[match.meeting_time]
+        if recruiter.name in recruiters:
+            list_position = next(
+                (
+                    i
+                    for i, item in enumerate(list_of_dicts)
+                    if item["NOMBRE Y APELLIDOS"] == recruiter.name
+                )
+            )
+            list_of_dicts[list_position][hour] = coder.prom_and_name()
+        else:
+            this_dict = {
+                "EMPRESA": recruiter.company,
+                "NOMBRE Y APELLIDOS": recruiter.name,
+                "EMAIL": recruiter.email,
+                "CARGO": recruiter.charge,
+                "LINKEDIN": recruiter.linkedin,
+            }
+            solution_locations = recruiter.location_dict(locations)
+            this_dict.update(solution_locations)
+            solution_skills = recruiter.skills_dict(skills)
+            this_dict.update(solution_skills)
+            this_dict.update(recruiter.schedule)
+            this_dict[hour] = coder.prom_and_name()
+            list_of_dicts.append(this_dict)
+            recruiters.append(recruiter.name)
+    return list_of_dicts
+
+
+def get_all_locations(recruiter_dict):
+    location_dict = {}
+    for key, value in location_dict.items():
+        if key.startswith("L-"):
+            dict = {key[2:]: ""}
+            locations_dict.update(dict)
+    return location_dict
+
+
+def get_all_skills(recruiter_dict):
+    skills_dict = {}
+    for key, value in skills_dict.items():
+        if key.startswith("S-"):
+            dict = {key[2:]: ""}
+            skills_dict.update(dict)
+    return skills_dict
