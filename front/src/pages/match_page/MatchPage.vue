@@ -72,17 +72,43 @@ export default {
             body:JSON.stringify({"CODERS":this.jsonCoders,"RECRUITERS":this.jsonRecruiters}),
             headers:{"Content-Type":"application/json"}
           }
-          console.log("Response", settings)
           let response = await fetch("http://localhost:5000/api/prematch", settings) 
           let jsonResponse = await response.json()
           if (response.status === 200 ) {
-              this.isSpinnerActivated=false
-              this.dataToExcel(jsonResponse)
+            let orderedJson=this.orderJSON(jsonResponse)
+            this.isSpinnerActivated=false
+            this.dataToExcel(orderedJson)
           }
-      }
+        }
     },
+    orderJSON(jsonToOrder){
+      /*---------------------------------------------------------------------------------------------------------*/        
+          let orderList=["EMPRESA", "NOMBRE Y APELLIDOS", "EMAIL",	"CARGO","LINKEDIN"]
+          let orderedJSON=[]
+          for (let match of jsonToOrder){
+              let orderedDict={}
+              for (let key of orderList){
+                  let valueMatchKey=match[key]
+                orderedDict[key]=valueMatchKey
+              }
+                let keysMatch = Object.keys(match)
+                let keysOrderedDict=Object.keys(orderedDict)
+    
+              for (let keyLeft of keysMatch) {
+                  if (!keysOrderedDict.includes(keyLeft)) {
+                      orderedDict[keyLeft] = match[keyLeft]
+                    }
+                  
+                }
+                orderedJSON.push(orderedDict)
+                console.log(orderedJSON)
+              }
+              return orderedJSON
+      /*--------------------------------------------------------------------------------------------------------*/
+    },
+    
     dataToExcel(jsonResponse){
-        const workbook = XLSX.utils.book_new();
+      const workbook = XLSX.utils.book_new();
         const worksheet = XLSX.utils.json_to_sheet(jsonResponse)
         XLSX.utils.book_append_sheet(workbook, worksheet, "Propuesta Match")
         XLSX.writeFile(workbook, "Match.xlsx") //OK
