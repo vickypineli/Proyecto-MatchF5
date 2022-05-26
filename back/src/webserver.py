@@ -45,6 +45,6 @@ def create_app(repositories):
         selected_solution = select_solution(solutions)
         dict_of_solution = solution_to_dict(selected_solution, locations, skills)
 
-        return jsonify(dict_of_solution)
+        return jsonify(dict_of_solution), 200
 
     return app
