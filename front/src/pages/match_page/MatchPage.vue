@@ -3,6 +3,7 @@
     <div class="data">
       <h1>INSERTAR DATOS</h1>
     </div>
+    <img src="@/assets/img/spinning-loading.gif" v-show="isSpinnerActivated" class="spinner">
     <article id="container">
       <div class="selectfile">
         <label
@@ -11,10 +12,11 @@
         </label>
       </div>
 
-      <button @click="sendData">UPLOAD</button>
+      <button @click="sendData">Mandar Excel</button>
     </article>
   </section>
-  <p v-show="checkSpreadsheetName===true">Verificar el nombre de las hojas sea en mayúsculas</p>
+  <p v-show="checkSpreadsheetName===true">Algo salió mal, verifica nombre de las hojas o excel vacío</p>
+  <p v-show="isExcelGenerated===true">Excel se ha generado con éxito!</p>
 </template>
 
 <script>
@@ -37,48 +39,10 @@ export default {
       jsonCoders:'',
       jsonRecruiters:'',
       checkSpreadsheetName:'',
-      responsePOST: "",
-      match: [{
-              EMPRESA:"Devoteam Drago",
-              "NOMBRE Y APELLIDOS": "IGNACIO MERINO ALVAREZ", 
-              EMAIL: " ", 
-              CARGO: "DIRECTOR ZONA NORTE", 
-              LINKEDIN: "https://www.linkedin.com/in/ignacio-merino/", 
-              BCN: "x", 
-              AST: "", 
-              BIO: "x", 
-              PHP:"x", 
-              JAVA:"x", 
-              PYTHON:"x", 
-              "10:10": "BIO Perla" , 
-              "10:20": "BIO David Ordiales", 
-              "10:30": "BIO Ainara"
-            },
-            {
-              EMPRESA:"Ibermatica",
-              "NOMBRE Y APELLIDOS": "BArtolo perez", 
-              EMAIL: " bartolo@hotmail.com", 
-              CARGO: "RRHH", 
-              LINKEDIN: "https://www.linkedin.com/in/bartolo/", 
-              REMOTO: "x",
-              BCN: "", 
-              AST: "x", 
-              BIO: "", 
-              PHP:"x", 
-              JAVA:"x", 
-              PYTHON:"x", 
-              "10:10": "BIO David Ordiales" , 
-              "10:20": "", 
-              "10:30": "BIO Ainara"
-            }]
+      isSpinnerActivated:false,
+      isExcelGenerated:false
     }
   },
-  watch: {
-    responsePOST(){
-      this.retrieveData()
-    }
-  },
-
   methods: {
     async onChangeFile(event) {
       const file = event.target.files[0]
@@ -101,28 +65,29 @@ export default {
       else {return true}
     },
       
-    sendData(){
+    async sendData(){
       if (this.checkDataIfIsComplete()===true){
+          this.isSpinnerActivated=true
           const settings={
             method:"POST",
-            body:{CODERS:this.jsonCoders,RECRUITERS:this.jsonRecruiters},
+            body:{"CODERS":this.jsonCoders,"RECRUITERS":this.jsonRecruiters},
             headers:{"Content-Type":"application/json"}
           }
-          // let response = await fetch("http://localhost:5000/api/match", settings) 
-          if (response.status=== 200 ) {
-              this.responsePOST =  response
+          let response = await fetch("http://localhost:5000/api/prematch", settings) 
+          let jsonResponse = await response.json()
+          if (response.status === 200 ) {
+              this.isSpinnerActivated=false
+              this.dataToExcel(jsonResponse)
           }
-          
-          console.log("Response", settings)
+          //console.log("Response", settings)
       }
-      this.retrieveData(this.match)
     },
-
-    async retrieveData(){
+    dataToExcel(jsonResponse){
         const workbook = XLSX.utils.book_new();
-        const worksheet = XLSX.utils.json_to_sheet(this.match)
+        const worksheet = XLSX.utils.json_to_sheet(jsonResponse)
         XLSX.utils.book_append_sheet(workbook, worksheet, "Propuesta Match")
         XLSX.writeFile(workbook, "Match.xlsx") //OK
+        this.isExcelGenerated=true
     }
   }
 }
@@ -174,5 +139,8 @@ button {
   font-size: 1.2em;
   font-family: "poppins";
 }
-
+.spinner{
+  max-width: 10em;
+  max-height: 10em;
+}
 </style>
