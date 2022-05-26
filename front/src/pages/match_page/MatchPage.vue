@@ -68,18 +68,17 @@ export default {
     async sendData(){
       if (this.checkDataIfIsComplete()===true){
           this.isSpinnerActivated=true
-          const settings={
-            method:"POST",
-            body:{"CODERS":this.jsonCoders,"RECRUITERS":this.jsonRecruiters},
+          const settings={method:"POST",
+            body:JSON.stringify({"CODERS":this.jsonCoders,"RECRUITERS":this.jsonRecruiters}),
             headers:{"Content-Type":"application/json"}
           }
+          console.log("Response", settings)
           let response = await fetch("http://localhost:5000/api/prematch", settings) 
           let jsonResponse = await response.json()
           if (response.status === 200 ) {
               this.isSpinnerActivated=false
               this.dataToExcel(jsonResponse)
           }
-          //console.log("Response", settings)
       }
     },
     dataToExcel(jsonResponse){
