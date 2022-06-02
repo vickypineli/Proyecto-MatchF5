@@ -65,6 +65,7 @@ def final_result(list_of_matches, slots):
 
 
 def filter_by_location(list_of_matches):
+
     return [match for match in list_of_matches if match.is_same_location()]
 
 
@@ -73,9 +74,15 @@ def filter_by_skill(list_of_matches):
     return [match for match in list_of_matches if match.has_skill()]
 
 
-def filter_by_languages(list_of_matches):
+# def filter_by_languages(list_of_matches):
 
-    return [match for match in list_of_matches if match.has_same_languages()]
+#     return [match for match in list_of_matches if match.has_same_languages()]
+
+
+def principal_filter(list_of_matches):
+    location_filter = filter_by_location(list_of_matches)
+    final_filter = filter_by_skill(location_filter)
+    return final_filter
 
 
 def select_skills(item_dict):

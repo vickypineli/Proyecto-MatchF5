@@ -7,8 +7,44 @@ from src.main import (
     filter_repeated_meetings,
     filter_by_location,
     filter_by_skill,
-    filter_by_languages,
 )
+
+
+def setup():
+
+    ainara = Coder(
+        name="ainara", locations=["Bilbao", "Barcelona"], skills=["python", "vue"]
+    )
+    ainhoa = Coder(name="ainhoa", locations=["Bilbao"], skills=["python", "vue"])
+    jeff = Coder(name="jeff", locations=["Bilbao"], skills=["python", "vue"])
+
+    perla = Recruiter(
+        name="perla",
+        company="company1",
+        charge="recruiter",
+        locations=["Bilbao"],
+        skills=["python", "angular"],
+    )
+    laura = Recruiter(
+        name="laura",
+        company="company2",
+        charge="recruiter",
+        locations=["Barcelona"],
+        skills=["python", "vue"],
+    )
+    joseph = Recruiter(
+        name="joseph",
+        company="company3",
+        charge="recruiter",
+        locations=["Bilbao"],
+        skills=["php", "angular"],
+    )
+
+    coder_list = [ainara, ainhoa, jeff]
+    recruiter_list = [perla, laura, joseph]
+
+    number_of_meetings = 5
+    return create_list_of_matches(coder_list, recruiter_list, number_of_meetings)
 
 
 def test_main_should_filter_invalid_combiantions():
@@ -16,6 +52,7 @@ def test_main_should_filter_invalid_combiantions():
     perla = Recruiter("perla", "Ibermatica", "perla@gmail.com", "Directora")
     laura = Recruiter("laura", "Kerkaru", "laura@gmail.com", "Directora")
     coder_list = [ainara]
+    # coder adicional joker
     recruiter_list = [perla, laura]
     number_of_meetings = 2
 
@@ -55,28 +92,24 @@ def test_main_should_filter_repeat_meetings():
     number_of_combinations = sum(1 for i in filtered_list)
 
     assert number_of_combinations == 7
-    
-
-    
-    
 
 
-# def test_main_should_return_list_of_matches_with_same_locations():
+def test_main_should_return_list_of_matches_with_same_locations():
 
-#     list_of_matches = setup()
+    list_of_matches = setup()
 
-#     list_filtered_by_location = filter_by_location(list_of_matches)
+    list_filtered_by_location = filter_by_location(list_of_matches)
 
-#     assert len(list_filtered_by_location) == 35
+    assert len(list_filtered_by_location) == 50
 
 
-# def test_main_should_return_list_of_matches_with_a_matching_skill():
+def test_main_should_return_list_of_matches_with_a_matching_skill():
 
-#     list_of_matches = setup()
+    list_of_matches = setup()
 
-#     list_filtered_by_skill = filter_by_skill(list_of_matches)
+    list_filtered_by_skill = filter_by_skill(list_of_matches)
 
-#     assert len(list_filtered_by_skill) == 30
+    assert len(list_filtered_by_skill) == 45
 
 
 # def test_main_should_return_list_of_matches_with_same_languages():

@@ -9,22 +9,26 @@ class Match:
         return f"| {self.coder.name}, {self.recruiter.name}, slot:{self.meeting_time}|"
 
     def is_same_location(self):
-        for location in self.recruiter.location:
-            if location in self.coder.location:
+        if self.coder.name == "joker":
+            return True
+        for location in self.recruiter.locations:
+            if location in self.coder.locations:
                 return True
         return False
 
     def has_skill(self):
+        if self.coder.name == "joker":
+            return True
         for skill in self.recruiter.skills:
             if skill in self.coder.skills:
                 return True
         return False
 
-    def has_same_languages(self):
-        for languages in self.recruiter.languages:
-            if languages in self.coder.languages:
-                return True
-        return False
+    # def has_same_languages(self):
+    #     for languages in self.recruiter.languages:
+    #         if languages in self.coder.languages:
+    #             return True
+    #     return False
 
     # def calc_match(self):
     #     location_value = 0
