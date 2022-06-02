@@ -7,4 +7,6 @@ class Coder:
         self.prom = prom
 
     def prom_and_name(self):
+        if self.name == "joker":
+            return "-"
         return self.prom + " " + self.name
