@@ -11,6 +11,7 @@ from src.main import (
     get_all_locations,
     get_all_skills,
     solution_to_dict,
+    principal_filter,
 )
 
 from src.lib.utils import object_to_json
@@ -40,8 +41,9 @@ def create_app(repositories):
         locations = get_all_locations(recruiters_list[0])
         skills = get_all_skills(recruiters_list[0])
         matches = create_list_of_matches(coders, recruiters, number_of_meetings)
+        filtered_matches = principal_filter(matches)
         slots = number_of_meetings * len(recruiters)
-        solutions = final_result(matches, slots)
+        solutions = final_result(filtered_matches, slots)
         selected_solution = select_solution(solutions)
         dict_of_solution = solution_to_dict(selected_solution, locations, skills)
 

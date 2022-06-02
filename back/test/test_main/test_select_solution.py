@@ -9,7 +9,9 @@ def test_select_solution_should_return_one_solution_from_the_list_of_solutions()
             "TELEFONO": 666666661,
             "MAIL": "ainara@gmail.com",
             "PROMOCION": "BIO",
-            "L-BILBAO": "x",
+            "L-BILBAO": "",
+            "L-BARCELONA": "x",
+            "S-JAVASCRIPT": "",
             "S-PYTHON": "x",
         },
         {
@@ -22,6 +24,7 @@ def test_select_solution_should_return_one_solution_from_the_list_of_solutions()
             "L-BARCELONA": "x",
             "S-JAVASCRIPT": "x",
             "S-PYTHON": "x",
+            "S-PHP": "x",
         },
         {
             "NOMBRE": "David",
@@ -44,8 +47,8 @@ def test_select_solution_should_return_one_solution_from_the_list_of_solutions()
             "LINKEDIN": "https://www.linkedin.com/in/Andres",
             "CARGO": "Director",
             "L-BILBAO": "x",
-            "L-BARCELONA": "x",
-            "L-ASTURIAS": "x",
+            "L-BARCELONA": "",
+            "L-ASTURIAS": "",
             "S-JAVA": "x",
             "S-PHP": "x",
             "S-PYTHON": "x",
@@ -60,8 +63,8 @@ def test_select_solution_should_return_one_solution_from_the_list_of_solutions()
             "LINKEDIN": "https://www.linkedin.com/in/Laura",
             "CARGO": "RH",
             "L-BILBAO": "x",
-            "L-BARCELONA": "x",
-            "L-ASTURIAS": "x",
+            "L-BARCELONA": "",
+            "L-ASTURIAS": "",
             "S-JAVA": "x",
             "S-PHP": "x",
             "S-PYTHON": "x",
@@ -76,11 +79,11 @@ def test_select_solution_should_return_one_solution_from_the_list_of_solutions()
             "LINKEDIN": "https://www.linkedin.com/in/Maria",
             "CARGO": "Recruiter",
             "L-BILBAO": "x",
-            "L-BARCELONA": "x",
-            "L-ASTURIAS": "x",
-            "S-JAVA": "x",
+            "L-BARCELONA": "",
+            "L-ASTURIAS": "",
+            "S-JAVA": "",
             "S-PHP": "x",
-            "S-PYTHON": "x",
+            "S-PYTHON": "",
             "10:10": "x",
             "10:20": "x",
             "10:30": "x",
@@ -95,9 +98,11 @@ def test_select_solution_should_return_one_solution_from_the_list_of_solutions()
         coder_list, recruiter_list, number_of_meetings
     )
 
+    filtered_matches = principal_filter(list_of_matches)
+
     slots = len(recruiter_list) * number_of_meetings
 
-    list_of_combinations = create_list_of_combinations(list_of_matches, slots)
+    list_of_combinations = create_list_of_combinations(filtered_matches, slots)
 
     pre_filtered_list = filter_invalid_combinations(list_of_combinations)
 
