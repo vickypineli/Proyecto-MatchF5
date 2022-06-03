@@ -1,113 +1,98 @@
 from src.main import *
 
 
-def test_select_solution_should_return_one_solution_from_the_list_of_solutions():
-    json_coders = [
-        {
-            "NOMBRE": "Ainara",
-            "APELLIDOS": "Perez",
-            "TELEFONO": 666666661,
-            "MAIL": "ainara@gmail.com",
-            "PROMOCION": "BIO",
-            "L-BILBAO": "",
-            "L-BARCELONA": "x",
-            "S-JAVASCRIPT": "",
-            "S-PYTHON": "x",
-        },
-        {
-            "NOMBRE": "Perla",
-            "APELLIDOS": "Garcia",
-            "TELEFONO": 666666662,
-            "MAIL": "Perla@gmail.com",
-            "PROMOCION": "BIO",
-            "L-BILBAO": "x",
-            "L-BARCELONA": "x",
-            "S-JAVASCRIPT": "x",
-            "S-PYTHON": "x",
-            "S-PHP": "x",
-        },
-        {
-            "NOMBRE": "David",
-            "APELLIDOS": "Ordiales",
-            "TELEFONO": 666666663,
-            "MAIL": "David@gmail.com",
-            "PROMOCION": "BIO",
-            "L-BILBAO": "x",
-            "L-BARCELONA": "x",
-            "S-JAVASCRIPT": "x",
-            "S-PYTHON": "x",
-        },
-    ]
-
-    json_recruiters = [
+def test_select_solution_should_return_first_solution_from_the_list_of_solutions():
+    first_solution = [
         {
             "EMPRESA": "Merkatu",
-            "NOMBRE DEL RECRUITER": "Andres",
+            "NOMBRE Y APELLIDOS": "Andres",
             "EMAIL": "andres@merkatu.com",
-            "LINKEDIN": "https://www.linkedin.com/in/Andres",
             "CARGO": "Director",
-            "L-BILBAO": "x",
-            "L-BARCELONA": "",
-            "L-ASTURIAS": "",
-            "S-JAVA": "x",
-            "S-PHP": "x",
-            "S-PYTHON": "x",
-            "10:10": "x",
-            "10:20": "x",
-            "10:30": "x",
+            "LINKEDIN": "https://www.linkedin.com/in/Andres",
+            "BILBAO": "x",
+            "JAVA": "x",
+            "PHP": "x",
+            "PYTHON": "x",
+            "10:10": "BIO Ainara Perez",
+            "10:20": "BIO Perla Garcia",
+            "10:30": "BIO David Ordiales",
         },
         {
             "EMPRESA": "Ibermatica",
-            "NOMBRE DEL RECRUITER": "Laura",
+            "NOMBRE Y APELLIDOS": "Laura",
             "EMAIL": "laura.ibermatica.es",
-            "LINKEDIN": "https://www.linkedin.com/in/Laura",
             "CARGO": "RH",
-            "L-BILBAO": "x",
-            "L-BARCELONA": "",
-            "L-ASTURIAS": "",
-            "S-JAVA": "x",
-            "S-PHP": "x",
-            "S-PYTHON": "x",
-            "10:10": "x",
-            "10:20": "x",
-            "10:30": "x",
+            "LINKEDIN": "https://www.linkedin.com/in/Laura",
+            "BILBAO": "x",
+            "JAVA": "x",
+            "PHP": "x",
+            "PYTHON": "x",
+            "10:10": "BIO Perla Garcia",
+            "10:20": "BIO Ainara Perez",
+            "10:30": "-",
         },
         {
             "EMPRESA": "Efilm",
-            "NOMBRE DEL RECRUITER": "Maria",
+            "NOMBRE Y APELLIDOS": "Maria",
             "EMAIL": "maria.eflim.es",
-            "LINKEDIN": "https://www.linkedin.com/in/Maria",
             "CARGO": "Recruiter",
-            "L-BILBAO": "x",
-            "L-BARCELONA": "",
-            "L-ASTURIAS": "",
-            "S-JAVA": "",
-            "S-PHP": "x",
-            "S-PYTHON": "",
-            "10:10": "x",
-            "10:20": "x",
-            "10:30": "x",
+            "LINKEDIN": "https://www.linkedin.com/in/Maria",
+            "BILBAO": "x",
+            "JAVA": "x",
+            "PHP": "x",
+            "PYTHON": "x",
+            "10:10": "BIO David Ordiales",
+            "10:20": "-",
+            "10:30": "BIO Ainara Perez",
+        },
+    ]
+    second_solution = [
+        {
+            "EMPRESA": "Hodeia",
+            "NOMBRE Y APELLIDOS": "Lander Goikoetxea",
+            "EMAIL": "lander@hodeia.com",
+            "CARGO": "Director",
+            "LINKEDIN": "https://www.linkedin.com/in/Lander",
+            "BILBAO": "x",
+            "JAVA": "x",
+            "PHP": "x",
+            "PYTHON": "x",
+            "10:10": "BIO Ainara Perez",
+            "10:20": "BIO Perla Garcia",
+            "10:30": "BIO David Ordiales",
+        },
+        {
+            "EMPRESA": "Ibermatica",
+            "NOMBRE Y APELLIDOS": "Laura",
+            "EMAIL": "laura.ibermatica.es",
+            "CARGO": "RH",
+            "LINKEDIN": "https://www.linkedin.com/in/Laura",
+            "BILBAO": "x",
+            "JAVA": "x",
+            "PHP": "x",
+            "PYTHON": "x",
+            "10:10": "BIO Ainara Perez",
+            "10:20": "BIO Perla Garcia",
+            "10:30": "BIO David Ordiales",
+        },
+        {
+            "EMPRESA": "Efilm",
+            "NOMBRE Y APELLIDOS": "Maria",
+            "EMAIL": "maria.eflim.es",
+            "CARGO": "Recruiter",
+            "LINKEDIN": "https://www.linkedin.com/in/Maria",
+            "BILBAO": "x",
+            "JAVA": "x",
+            "PHP": "x",
+            "PYTHON": "x",
+            "10:10": "BIO David Ordiales",
+            "10:20": "-",
+            "10:30": "BIO Ainara Perez",
         },
     ]
 
-    coder_list = create_list_of_coders(json_coders)
-    recruiter_list = create_list_of_recruiters(json_recruiters)
-    number_of_meetings = count_number_of_slots(recruiter_list)
+    list_of_solutions = [first_solution, second_solution]
 
-    list_of_matches = create_list_of_matches(
-        coder_list, recruiter_list, number_of_meetings
-    )
+    selected_solution = select_solution(list_of_solutions)
 
-    filtered_matches = principal_filter(list_of_matches)
-
-    slots = len(recruiter_list) * number_of_meetings
-
-    list_of_combinations = create_list_of_combinations(filtered_matches, slots)
-
-    pre_filtered_list = filter_invalid_combinations(list_of_combinations)
-
-    filtered_list = filter_repeated_meetings(pre_filtered_list)
-
-    selected_solution = select_solution(filtered_list)
-
-    assert selected_solution is not None
+    assert selected_solution == first_solution
