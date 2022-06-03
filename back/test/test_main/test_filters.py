@@ -7,6 +7,7 @@ from src.main import (
     filter_repeated_meetings,
     filter_by_location,
     filter_by_skill,
+    filter_by_schedules,
 )
 
 
@@ -24,6 +25,7 @@ def setup():
         charge="recruiter",
         locations=["Bilbao"],
         skills=["python", "angular"],
+        schedule={"10:10": "", "10:20": "x", "10:30": "x", "10:40": "x", "10:50": "x"},
     )
     laura = Recruiter(
         name="laura",
@@ -31,6 +33,7 @@ def setup():
         charge="recruiter",
         locations=["Barcelona"],
         skills=["python", "vue"],
+        schedule={"10:10": "x", "10:20": "x", "10:30": "x", "10:40": "", "10:50": "x"},
     )
     joseph = Recruiter(
         name="joseph",
@@ -38,6 +41,7 @@ def setup():
         charge="recruiter",
         locations=["Bilbao"],
         skills=["php", "angular"],
+        schedule={"10:10": "x", "10:20": "x", "10:30": "", "10:40": "x", "10:50": ""},
     )
 
     coder_list = [ainara, ainhoa, jeff]
@@ -110,6 +114,14 @@ def test_main_should_return_list_of_matches_with_a_matching_skill():
     list_filtered_by_skill = filter_by_skill(list_of_matches)
 
     assert len(list_filtered_by_skill) == 45
+
+
+def test_main_should_return_list_of_matches_with_correct_schedules():
+    list_of_matches = setup()
+
+    list_filtered_by_assistance = filter_by_schedules(list_of_matches)
+
+    assert len(list_filtered_by_assistance) == 48
 
 
 # def test_main_should_return_list_of_matches_with_same_languages():

@@ -24,6 +24,14 @@ class Match:
                 return True
         return False
 
+    def has_schedule(self):
+        if self.coder.name == "joker":
+            return True
+        schedule_values = list(self.recruiter.schedule.values())
+        if schedule_values[self.meeting_time] == "x":
+            return True
+        return False
+
     # def has_same_languages(self):
     #     for languages in self.recruiter.languages:
     #         if languages in self.coder.languages:

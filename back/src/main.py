@@ -74,6 +74,10 @@ def filter_by_skill(list_of_matches):
     return [match for match in list_of_matches if match.has_skill()]
 
 
+def filter_by_schedules(list_of_matches):
+    return [match for match in list_of_matches if match.has_schedule()]
+
+
 # def filter_by_languages(list_of_matches):
 
 #     return [match for match in list_of_matches if match.has_same_languages()]
@@ -81,7 +85,8 @@ def filter_by_skill(list_of_matches):
 
 def principal_filter(list_of_matches):
     location_filter = filter_by_location(list_of_matches)
-    final_filter = filter_by_skill(location_filter)
+    skill_filter = filter_by_skill(location_filter)
+    final_filter = filter_by_schedules(skill_filter)
     return final_filter
 
 
@@ -204,7 +209,7 @@ def get_all_locations(recruiter_dict):
     for key, value in location_dict.items():
         if key.startswith("L-"):
             dict = {key[2:]: ""}
-            locations_dict.update(dict)
+            location_dict.update(dict)
     return location_dict
 
 
