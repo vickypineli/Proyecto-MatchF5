@@ -25,6 +25,7 @@ def setup():
         charge="recruiter",
         locations=["Bilbao"],
         skills=["python", "angular"],
+        schedule={"10:10": "x", "10:20": "x", "10:30": "x"},
     )
     laura = Recruiter(
         name="laura",
@@ -32,6 +33,7 @@ def setup():
         charge="recruiter",
         locations=["Barcelona"],
         skills=["python", "vue"],
+        schedule={"10:10": "x", "10:20": "x", "10:30": "x"},
     )
     joseph = Recruiter(
         name="joseph",
@@ -39,6 +41,7 @@ def setup():
         charge="recruiter",
         locations=["Bilbao"],
         skills=["php", "angular"],
+        schedule={"10:10": "x", "10:20": "x", "10:30": "x"},
     )
 
     coder_list = [ainara, ainhoa, jeff]
