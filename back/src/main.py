@@ -1,17 +1,24 @@
-from src.domain.recruiter import Recruiter
-from src.domain.match import Match
-from src.domain.coder import Coder
 from itertools import combinations
 import re
 
 
 def create_list_of_matches(coders, recruiters, number_of_meetings):
+    joker = {
+        "name": "joker",
+        "locations": [],
+        "skills": [],
+        "prom": "",
+    }
+    coders.append(joker)
     matchs_list = []
-    coders.append(Coder("joker"))
     for coder in coders:
         for recruiter in recruiters:
             for meeting in range(number_of_meetings):
-                match = Match(coder, recruiter, meeting)
+                match = {
+                    "coder": coder,
+                    "recruiter": recruiter,
+                    "meeting_time": meeting,
+                }
                 matchs_list.append(match)
     return matchs_list
 
@@ -29,7 +36,7 @@ def is_valid_combination(combination):
 
     time_slot_list = []
     for match in combination:
-        time_slot = f"{match.recruiter.name}{match.meeting_time}"
+        time_slot = (match["recruiter"]["name"], match["meeting_time"])
         if time_slot in time_slot_list:
             return False
         time_slot_list.append(time_slot)
@@ -44,12 +51,12 @@ def has_coders_properly_distributed(combination):
     meeting_list = []
     coder_times = []
     for match in combination:
-        if match.coder.name == "joker":
+        if match["coder"]["name"] == "joker":
             continue
-        meeting = f"{match.recruiter.name}{match.coder.name}"
+        meeting = (match["recruiter"]["name"], match["coder"]["name"])
         if meeting in meeting_list:
             return False
-        coder_time_slot = f"{match.coder.name}{match.meeting_time}"
+        coder_time_slot = (match["coder"]["name"], match["meeting_time"])
         meeting_list.append(meeting)
         if coder_time_slot in coder_times:
             return False
@@ -66,16 +73,43 @@ def final_result(list_of_matches, slots):
 
 def filter_by_location(list_of_matches):
 
-    return [match for match in list_of_matches if match.is_same_location()]
+    return [match for match in list_of_matches if is_same_location(match)]
+
+
+def is_same_location(match):
+    if match["coder"]["name"] == "joker":
+        return True
+    for location in match["recruiter"]["locations"]:
+        if location in match["coder"]["locations"]:
+            return True
+    return False
 
 
 def filter_by_skill(list_of_matches):
 
-    return [match for match in list_of_matches if match.has_skill()]
+    return [match for match in list_of_matches if has_skill(match)]
+
+
+def has_skill(match):
+    if match["coder"]["name"] == "joker":
+        return True
+    for skill in match["recruiter"]["skills"]:
+        if skill in match["coder"]["skills"]:
+            return True
+    return False
 
 
 def filter_by_schedules(list_of_matches):
-    return [match for match in list_of_matches if match.has_schedule()]
+    return [match for match in list_of_matches if has_schedule(match)]
+
+
+def has_schedule(match):
+    if match["coder"]["name"] == "joker":
+        return True
+    schedule_values = list(match["recruiter"]["schedule"].values())
+    if schedule_values[match["meeting_time"]] == "x":
+        return True
+    return False
 
 
 # def filter_by_languages(list_of_matches):
@@ -110,13 +144,12 @@ def convert_to_coder(coder_dict):
 
     skills = select_skills(coder_dict)
     locations = select_locations(coder_dict)
-    coder = Coder(
-        name=coder_dict["NOMBRE"] + " " + coder_dict["APELLIDOS"],
-        locations=locations,
-        skills=skills,
-        prom=coder_dict["PROMOCION"],
-    )
-
+    coder = {
+        "name": coder_dict["NOMBRE"] + " " + coder_dict["APELLIDOS"],
+        "locations": locations,
+        "skills": skills,
+        "prom": coder_dict["PROMOCION"],
+    }
     return coder
 
 
@@ -136,17 +169,16 @@ def convert_to_recruiter(recruiter_dict):
     skills = select_skills(recruiter_dict)
     locations = select_locations(recruiter_dict)
     schedules = select_schedule_from_recruiter(recruiter_dict)
-    recruiter = Recruiter(
-        name=recruiter_dict["NOMBRE DEL RECRUITER"],
-        company=recruiter_dict["EMPRESA"],
-        email=recruiter_dict["EMAIL"],
-        linkedin=recruiter_dict["LINKEDIN"],
-        charge=recruiter_dict["CARGO"],
-        locations=locations,
-        skills=skills,
-        languages=[],
-        schedule=schedules,
-    )
+    recruiter = {
+        "name": recruiter_dict["NOMBRE DEL RECRUITER"],
+        "company": recruiter_dict["EMPRESA"],
+        "email": recruiter_dict["EMAIL"],
+        "linkedin": recruiter_dict["LINKEDIN"],
+        "charge": recruiter_dict["CARGO"],
+        "locations": locations,
+        "skills": skills,
+        "schedule": schedules,
+    }
 
     return recruiter
 
@@ -155,9 +187,9 @@ def create_list_of_recruiters(recruiters_list):
     return [convert_to_recruiter(recruiter) for recruiter in recruiters_list]
 
 
-def count_number_of_slots(recruiter_obj_list):
-    recruiter = recruiter_obj_list[0]
-    slots = len(recruiter.schedule)
+def count_number_of_slots(recruiter_dict_list):
+    recruiter = recruiter_dict_list[0]
+    slots = len(recruiter["schedule"])
     return slots
 
 

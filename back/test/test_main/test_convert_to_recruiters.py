@@ -18,13 +18,13 @@ def test_convert_to_recruiter_should_transform_a_dict_into_a_recruiter():
 
     recruiter = convert_to_recruiter(recruiter_dict)
 
-    assert recruiter.name == "Andres"
-    assert recruiter.company == "Merkatu"
-    assert recruiter.locations == ["BILBAO"]
-    assert recruiter.skills == ["PYTHON"]
+    assert recruiter["name"] == "Andres"
+    assert recruiter["company"] == "Merkatu"
+    assert recruiter["locations"] == ["BILBAO"]
+    assert recruiter["skills"] == ["PYTHON"]
 
 
-def test_create_list_of_recruiters_should_return_a_list_of_recruiters_obj():
+def test_create_list_of_recruiters_should_return_a_list_of_recruiters_dict():
     recruiter_list = [
         {
             "EMPRESA": "Merkatu",
@@ -58,7 +58,7 @@ def test_create_list_of_recruiters_should_return_a_list_of_recruiters_obj():
 
     recruiter_obj_list = create_list_of_recruiters(recruiter_list)
 
-    assert recruiter_obj_list[0].name == "Andres"
-    assert recruiter_obj_list[1].name == "Laura"
-    assert recruiter_obj_list[0].skills == ["PYTHON"]
-    assert recruiter_obj_list[1].skills == ["JAVA"]
+    assert recruiter_obj_list[0]["name"] == "Andres"
+    assert recruiter_obj_list[1]["name"] == "Laura"
+    assert recruiter_obj_list[0]["skills"] == ["PYTHON"]
+    assert recruiter_obj_list[1]["skills"] == ["JAVA"]
