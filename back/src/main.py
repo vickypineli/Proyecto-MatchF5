@@ -193,9 +193,11 @@ def solution_to_dict(solution, locations, skills):
                 "CARGO": recruiter.charge,
                 "LINKEDIN": recruiter.linkedin,
             }
-            solution_locations = recruiter.location_dict(locations)
+            possible_locations = {key: "" for key in locations}
+            solution_locations = recruiter.location_dict(possible_locations)
             this_dict.update(solution_locations)
-            solution_skills = recruiter.skills_dict(skills)
+            possible_skills = {key: "" for key in skills}
+            solution_skills = recruiter.skills_dict(possible_skills)
             this_dict.update(solution_skills)
             this_dict.update(recruiter.schedule)
             this_dict[hour] = coder.prom_and_name()
