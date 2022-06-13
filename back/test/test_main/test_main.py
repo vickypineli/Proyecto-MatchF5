@@ -14,12 +14,13 @@ from src.main import (
 def setup():
 
     ainara = Coder(
-        name="ainara", locations=["Bilbao", "Barcelona"], skills=["python", "vue"]
+        id=0, name="ainara", locations=["Bilbao", "Barcelona"], skills=["python", "vue"]
     )
-    ainhoa = Coder(name="ainhoa", locations=["Bilbao"], skills=["python", "vue"])
-    jeff = Coder(name="jeff", locations=["Bilbao"], skills=["python", "vue"])
+    ainhoa = Coder(id=1, name="ainhoa", locations=["Bilbao"], skills=["python", "vue"])
+    jeff = Coder(id=2, name="jeff", locations=["Bilbao"], skills=["python", "vue"])
 
     perla = Recruiter(
+        id=0,
         name="perla",
         company="company1",
         charge="recruiter",
@@ -28,6 +29,7 @@ def setup():
         schedule={"10:10": "x", "10:20": "x", "10:30": "x"},
     )
     laura = Recruiter(
+        id=1,
         name="laura",
         company="company2",
         charge="recruiter",
@@ -36,6 +38,7 @@ def setup():
         schedule={"10:10": "x", "10:20": "x", "10:30": "x"},
     )
     joseph = Recruiter(
+        id=2,
         name="joseph",
         company="company3",
         charge="recruiter",
@@ -52,9 +55,9 @@ def setup():
 
 
 def test_main_should_create_a_list_of_matches():
-    ainara = Coder("ainara")
-    perla = Recruiter("perla", "Ibermatica", "perla@gmail.com", "Directora")
-    laura = Recruiter("laura", "Kerkaru", "laura@gmail.com", "Directora")
+    ainara = Coder(id=0, name="ainara")
+    perla = Recruiter(0, "perla", "Ibermatica", "perla@gmail.com", "Directora")
+    laura = Recruiter(1, "laura", "Kerkaru", "laura@gmail.com", "Directora")
     coder_list = [ainara]
     recruiter_list = [perla, laura]
     number_of_meetings = 2
@@ -74,9 +77,9 @@ def test_main_should_filter_inapropiate_matches():
 
 
 def test_main_should_create_a_list_of_posible_combinations():
-    ainara = Coder("ainara")
-    perla = Recruiter("perla", "Ibermatica", "perla@gmail.com", "Directora")
-    laura = Recruiter("laura", "Kerkaru", "laura@gmail.com", "Directora")
+    ainara = Coder(id=0, name="ainara")
+    perla = Recruiter(0, "perla", "Ibermatica", "perla@gmail.com", "Directora")
+    laura = Recruiter(1, "laura", "Kerkaru", "laura@gmail.com", "Directora")
     coder_list = [ainara]
     recruiter_list = [perla, laura]
     number_of_meetings = 2

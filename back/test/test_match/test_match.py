@@ -4,8 +4,9 @@ from src.domain.match import Match
 
 
 def test_should_return_coder_and_recruiter():
-    ainara = Coder(name="ainara", locations=["Bilbao"], skills=["python", "vue"])
+    ainara = Coder(id=0, name="ainara", locations=["Bilbao"], skills=["python", "vue"])
     perla = Recruiter(
+        id=0,
         name="perla",
         company="Companyinc",
         charge="Recruiter",

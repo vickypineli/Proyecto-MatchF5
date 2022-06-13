@@ -1,13 +1,16 @@
+from nis import match
+from unittest import result
 from src.domain.recruiter import Recruiter
 from src.domain.match import Match
 from src.domain.coder import Coder
 from itertools import combinations
 import re
+import numpy as np
 
 
 def create_list_of_matches(coders, recruiters, number_of_meetings):
     matchs_list = []
-    coders.append(Coder("joker"))
+    coders.append(Coder(id=0, name="joker"))
     for coder in coders:
         for recruiter in recruiters:
             for meeting in range(number_of_meetings):
@@ -16,24 +19,62 @@ def create_list_of_matches(coders, recruiters, number_of_meetings):
     return matchs_list
 
 
+def transform_matches_to_tuples(list_of_matches):
+    return [match.to_tuple() for match in list_of_matches]
+
+
 def create_list_of_combinations(list_of_matches, slots):
     list_of_combinations = combinations(list_of_matches, slots)
     return list_of_combinations
 
 
+def filter_recruiter_tuples(list_of_tuples):
+    return filter(
+        lambda comb: len(comb) == len({match[1] for match in comb}), list_of_tuples
+    )
+
+
+def filter_meeting_tuples(list_of_tuples):
+    return filter(is_meeting_repeated, list_of_tuples)
+
+
+def is_meeting_repeated(comb):
+    return (
+        len(comb)
+        == len({match[2] for match in comb})
+        + (sum(1 for match in comb if match[2] == "0") - 1)
+        if sum(1 for match in comb if match[2] == "0") >= 1
+        else 0
+    )
+
+
+def filter_coder_tuples(list_of_tupels):
+    return filter(is_coder_repeated, list_of_tupels)
+
+
+def is_coder_repeated(comb):
+
+    return (
+        len(comb)
+        == len({match[3] for match in comb})
+        + (sum(1 for match in comb if match[3] == "0") - 1)
+        if sum(1 for match in comb if match[3] == "0") >= 1
+        else 0
+    )
+
+
+def filter_tuples(list_of_tuples):
+    filter_by_recruiter = filter_recruiter_tuples(list_of_tuples)
+    filter_by_meeting = filter_meeting_tuples(filter_by_recruiter)
+    last_filter = filter_coder_tuples(filter_by_meeting)
+    return last_filter
+
+
 def filter_invalid_combinations(list_of_combinations):
-    return filter(is_valid_combination, list_of_combinations)
-
-
-def is_valid_combination(combination):
-
-    time_slot_list = []
-    for match in combination:
-        time_slot = f"{match.recruiter.name}{match.meeting_time}"
-        if time_slot in time_slot_list:
-            return False
-        time_slot_list.append(time_slot)
-    return True
+    return filter(
+        lambda comb: len(comb) == len({match.time_slot for match in comb}),
+        list_of_combinations,
+    )
 
 
 def filter_repeated_meetings(list_of_combinations):
@@ -106,11 +147,12 @@ def select_locations(item_dict):
     return locations
 
 
-def convert_to_coder(coder_dict):
+def convert_to_coder(coder_dict, index):
 
     skills = select_skills(coder_dict)
     locations = select_locations(coder_dict)
     coder = Coder(
+        id=index + 1,
         name=coder_dict["NOMBRE"] + " " + coder_dict["APELLIDOS"],
         locations=locations,
         skills=skills,
@@ -121,7 +163,7 @@ def convert_to_coder(coder_dict):
 
 
 def create_list_of_coders(coder_list):
-    return [convert_to_coder(coder) for coder in coder_list]
+    return [convert_to_coder(coder, index) for index, coder in enumerate(coder_list)]
 
 
 def select_schedule_from_recruiter(recruiter_dict):
@@ -132,11 +174,12 @@ def select_schedule_from_recruiter(recruiter_dict):
     return schedule_dict
 
 
-def convert_to_recruiter(recruiter_dict):
+def convert_to_recruiter(recruiter_dict, index):
     skills = select_skills(recruiter_dict)
     locations = select_locations(recruiter_dict)
     schedules = select_schedule_from_recruiter(recruiter_dict)
     recruiter = Recruiter(
+        id=index + 1,
         name=recruiter_dict["NOMBRE DEL RECRUITER"],
         company=recruiter_dict["EMPRESA"],
         email=recruiter_dict["EMAIL"],
@@ -152,7 +195,10 @@ def convert_to_recruiter(recruiter_dict):
 
 
 def create_list_of_recruiters(recruiters_list):
-    return [convert_to_recruiter(recruiter) for recruiter in recruiters_list]
+    return [
+        convert_to_recruiter(recruiter, index)
+        for index, recruiter in enumerate(recruiters_list)
+    ]
 
 
 def count_number_of_slots(recruiter_obj_list):

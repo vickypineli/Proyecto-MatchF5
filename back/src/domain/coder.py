@@ -1,5 +1,6 @@
 class Coder:
-    def __init__(self, name, locations=[], skills=[], languages=[], prom=""):
+    def __init__(self, id, name, locations=[], skills=[], languages=[], prom=""):
+        self.id = id
         self.name = name
         self.locations = locations
         self.skills = skills

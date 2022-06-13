@@ -3,6 +3,19 @@ class Match:
         self.coder = coder
         self.recruiter = recruiter
         self.meeting_time = meeting_time
+        self.time_slot = (recruiter.name, meeting_time)
+        self.match_code = (
+            str(coder.id).zfill(4)
+            + str(recruiter.id).zfill(4)
+            + str(meeting_time).zfill(2)
+        )
+
+        self.recruiter_time_code = str(recruiter.id).zfill(4) + str(meeting_time).zfill(
+            4
+        )
+
+        self.meeting_code = str(coder.id).zfill(4) + str(recruiter.id).zfill(4)
+        self.coder_time_code = str(coder.id).zfill(4) + str(meeting_time).zfill(4)
         # self.coincidence = self.calc_match()
 
     def to_str(self):
@@ -31,6 +44,16 @@ class Match:
         if schedule_values[self.meeting_time] == "x":
             return True
         return False
+
+    def to_tuple(self):
+        if self.coder.name == "joker":
+            return (self.match_code, self.recruiter_time_code, "0", "0")
+        return (
+            self.match_code,
+            self.recruiter_time_code,
+            self.meeting_code,
+            self.coder_time_code,
+        )
 
     # def has_same_languages(self):
     #     for languages in self.recruiter.languages:
