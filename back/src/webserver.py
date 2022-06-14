@@ -1,18 +1,7 @@
 from lib2to3.pytree import convert
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from src.main import (
-    create_list_of_recruiters,
-    create_list_of_coders,
-    count_number_of_slots,
-    create_list_of_matches,
-    final_result,
-    select_solution,
-    get_all_locations,
-    get_all_skills,
-    solution_to_dict,
-    principal_filter,
-)
+from src.main import *
 
 from src.lib.utils import object_to_json
 
@@ -42,10 +31,15 @@ def create_app(repositories):
         skills = get_all_skills(recruiters_list[0])
         matches = create_list_of_matches(coders, recruiters, number_of_meetings)
         filtered_matches = principal_filter(matches)
+        tuple_matches = transform_matches_to_tuples(filtered_matches)
         slots = number_of_meetings * len(recruiters)
-        solutions = final_result(filtered_matches, slots)
-        selected_solution = select_solution(solutions)
-        dict_of_solution = solution_to_dict(selected_solution, locations, skills)
+        solutions = create_list_of_combinations(tuple_matches, slots)
+        filtered_solution = filter_tuples(solutions)
+        selected_solution = select_solution(filtered_solution)
+        solution_with_obj = transform_tuples_to_matches(
+            selected_solution, filtered_matches
+        )
+        dict_of_solution = solution_to_dict(solution_with_obj, locations, skills)
 
         return jsonify(dict_of_solution), 200
 

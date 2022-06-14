@@ -26,7 +26,7 @@ participants_json = {
             "MAIL": "Perla@gmail.com",
             "PROMOCION": "BCN",
             "L-REMOTO": "",
-            "L-BILBAO": "",
+            "L-BILBAO": "x",
             "L-ASTRUIAS": "",
             "L-BARCELONA": "x",
             "L-SEVILLA": "",
@@ -83,7 +83,7 @@ participants_json = {
             "LINKEDIN": "https://www.linkedin.com/in/Laura",
             "CARGO": "RH",
             "L-REMOTO": "",
-            "L-BILBAO": "",
+            "L-BILBAO": "x",
             "L-ASTRUIAS": "x",
             "L-BARCELONA": "x",
             "L-SEVILLA": "",
@@ -112,7 +112,7 @@ participants_json = {
             "S-VUE": "x",
             "S-JAVA": "",
             "S-PHP": "",
-            "S-PYTHON": "",
+            "S-PYTHON": "x",
             "S-REACT": "",
             "10:10": "x",
             "10:20": "x",
@@ -161,15 +161,14 @@ slots = number_of_meetings * len(recruiters)
 
 combs = create_list_of_combinations(tuples, slots)
 
-first_filter = filter_recruiter_tuples(combs)
-
-second_filter = filter_meeting_tuples(first_filter)
-
-final_filter = filter_coder_tuples(second_filter)
+filtered_combs = filter_tuples(combs)
 
 # counter = sum(1 for i in final_filter)
-for solution in final_filter:
-    print(solution)
-    break
+solution = select_solution(filtered_combs)
 
+solution_with_objs = transform_tuples_to_matches(solution, filtered_matches)
+
+dict_of_solution = solution_to_dict(solution_with_objs, locations, skills)
+
+print(dict_of_solution)
 # print(counter)

@@ -23,6 +23,15 @@ def transform_matches_to_tuples(list_of_matches):
     return [match.to_tuple() for match in list_of_matches]
 
 
+def transform_tuples_to_matches(list_of_tuples, list_of_matches):
+    return [
+        match
+        for match in list_of_matches
+        for tuple in list_of_tuples
+        if tuple[0] == match.match_code
+    ]
+
+
 def create_list_of_combinations(list_of_matches, slots):
     list_of_combinations = combinations(list_of_matches, slots)
     return list_of_combinations

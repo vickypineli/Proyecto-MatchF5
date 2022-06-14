@@ -2,6 +2,7 @@ from src.domain.coder import Coder
 from src.domain.recruiter import Recruiter
 from src.main import (
     create_list_of_matches,
+    select_solution,
     transform_matches_to_tuples,
     create_list_of_combinations,
     filter_recruiter_tuples,
@@ -54,8 +55,5 @@ def test_main_should_filter_repeat_meetings():
     filtered_list = filter_tuples(list_of_combinations)
 
     number_of_combinations = sum(1 for i in filtered_list)
-
-    for i in filtered_list:
-        print(i)
 
     assert number_of_combinations == 7
