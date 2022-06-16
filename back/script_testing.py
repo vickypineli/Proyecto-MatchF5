@@ -9,6 +9,7 @@ from src.main import (
     get_all_skills,
     solution_to_dict,
     principal_filter,
+    transform_tuples_to_matches,
 )
 
 participants_json = {
@@ -116,6 +117,7 @@ slots = number_of_meetings * len(recruiters)
 solutions = final_result(filtered_matches, slots)
 
 selected_solution = select_solution(solutions)
-dict_of_solution = solution_to_dict(selected_solution, locations, skills)
+solution_matches = transform_tuples_to_matches(selected_solution, matches)
+dict_of_solution = solution_to_dict(solution_matches, locations, skills)
 
 print(dict_of_solution)

@@ -1,6 +1,7 @@
 class Recruiter:
     def __init__(
         self,
+        id,
         name,
         company,
         charge,
@@ -11,6 +12,7 @@ class Recruiter:
         languages=[],
         schedule={},
     ):
+        self.id = id
         self.name = name
         self.company = company
         self.email = email

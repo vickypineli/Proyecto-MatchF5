@@ -16,8 +16,9 @@ def test_convert_to_recruiter_should_transform_a_dict_into_a_recruiter():
         "13:30": "x",
     }
 
-    recruiter = convert_to_recruiter(recruiter_dict)
+    recruiter = convert_to_recruiter(recruiter_dict, 0)
 
+    assert recruiter.id == 1
     assert recruiter.name == "Andres"
     assert recruiter.company == "Merkatu"
     assert recruiter.locations == ["BILBAO"]
